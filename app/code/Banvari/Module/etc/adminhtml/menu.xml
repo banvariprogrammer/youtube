@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Banvari_Module::module" title="Banvari" translate="title" module="Banvari_Module" sortOrder="20" resource="Banvari_Module::module"/>
+        <add id="Banvari_Module::banvari_manage" title="Sub Menu" translate="title" module="Banvari_Module" sortOrder="10" parent="Banvari_Module::module" action="module/submenu/index" resource="Banvari_Module::banvari_manage"/>
+    </menu>
+</config>
