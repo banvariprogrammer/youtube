@@ -20,13 +20,15 @@ use Magento\Framework\Exception\LocalizedException;
  */
 class TestUser implements ResolverInterface
 {
-
     private $_customerFactory;
+    protected $orderCollectionFactory;
 
     public function __construct(
-        \Magento\Customer\Model\CustomerFactory $customerFactory
+        \Magento\Customer\Model\CustomerFactory $customerFactory,
+        \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory
         ){
             $this->_customerFactory = $customerFactory;
+            $this->orderCollectionFactory = $orderCollectionFactory;
         }
     /**
      * @inheritdoc
@@ -40,42 +42,44 @@ class TestUser implements ResolverInterface
     ) {
         //echo json_encode($args);die;
         if(!isset($args['email']) || empty($args['email'])){
-                throw new GraphQlAuthorizationException(__('Email for customer should be specified',[\Magento\Customer\Model\Customer::ENTITY]));
+            throw new GraphQlAuthorizationException(__('Email for customer should be specified',[\Magento\Customer\Model\Customer::ENTITY]));
         }
         try{
             return $this->getCustomerData($args['email']);
         }catch(NoSuchEntityException $e){
-            throw new GraphQlNoSuchEntityException(__($e->getMessage()));
-        }catch(LocalizedException $e){
             throw new GraphQlNoSuchEntityException(__($e->getMessage()));
         }
         return $output;
     }
 
     private function getCustomerData($email):array{
-            try{
-                $customerData = [];
-                $customerColl = $this->_customerFactory->create()->getCollection()->addFieldToFilter("email",array("eq"=>$email));
-                $customerData = $customerColl->getData();
-                if(isset($customerData[0])){
-                    
-                    $customerData[0]['allProducts'][0]['name'] = 'ABC';
-                    $customerData[0]['allProducts'][0]['sku'] = 'abc';
-                    $customerData[0]['allProducts'][1]['name'] = 'Xyz';
-                    $customerData[0]['allProducts'][1]['sku'] = 'xyz';
-                    $customerData[0]['allProducts'][2]['name'] = 'PQR';
-                    $customerData[0]['allProducts'][2]['sku'] = 'pqr';
+        try{
+            $customerData = [];
+            $customerColl = $this->_customerFactory->create()->getCollection()->addFieldToFilter("email",array("eq"=>$email));
+            $customerData = $customerColl->getData();
+            if(isset($customerData[0])){
+                $customerId = $customerData[0]['entity_id'];
 
-                    return $customerData[0];
-                }else{
-                    return [];
+                $orders = $this->orderCollectionFactory->create()->addFieldToFilter(
+                    'customer_id',
+                    $customerId
+                );
+
+                if(count($orders) > 0) {
+                    foreach($orders as $key => $order) {
+                        $customerData[0]['allOrders'][$key]['order_number'] = $order->getIncrementId();
+                        $customerData[0]['allOrders'][$key]['created_at'] = $order->getCreatedAt();
+                        $customerData[0]['allOrders'][$key]['status'] = $order->getStatus();
+                    }
                 }
-                
-            }catch(NoSuchEntityException $e){
-                    return[];
-            }catch(LocalizedException $e){
-                throw new NoSuchEntityException(__($e->getMessage()));
-            }
-    }
 
+                return $customerData[0];
+            }else{
+                return [];
+            }
+            
+        }catch(LocalizedException $e){
+            throw new NoSuchEntityException(__($e->getMessage()));
+        }
+    }
 }

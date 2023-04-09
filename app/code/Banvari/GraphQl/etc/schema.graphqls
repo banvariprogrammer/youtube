@@ -1,7 +1,6 @@
-#Magento Customer GraphQl Schema
+#Magento Test User GraphQl Schema
 
 type Query {
-    testcustomer: Testcustomer @resolver(class: "Banvari\\GraphQl\\Model\\Resolver\\Customer") @doc(description: "The testcustomer query returns information about a customer")
     testuser(email: String @doc(description: "Email Address")
  ): testUser @resolver(class: "Banvari\\GraphQl\\Model\\Resolver\\TestUser") @doc(description: "Custom module datapassing")
 }
@@ -11,17 +10,11 @@ type testUser {
     firstname: String
     lastname: String
     email: String
-    allProducts: [ProductRecord] @doc(description: "Product records with info")
+    allOrders: [OrdersRecord] @doc(description: "Order number and date")
 }
 
-type ProductRecord {
-    sku: String @doc(description: "Get Product sku")
-    name: String @doc(description: "Get Product name")
-}
-
-type Testcustomer @doc(description: "Testcustomer defines the customer name and other details") {
-    entity_id: Int
-    firstname: String
-    lastname: String
-    email: String
+type OrdersRecord {
+    order_number: String @doc(description: "Get Order Number")
+    created_at: String @doc(description: "Get Order Date")
+    status: String @doc(description: "Get Order current status")
 }
