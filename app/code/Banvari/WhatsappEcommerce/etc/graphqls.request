@@ -1,0 +1,47 @@
+#1
+
+query {
+  recommended(
+    mobile:"919560548774"
+    region:"en-ae"
+    widget:"style_it_with"
+  ) {
+    locale
+    products {
+      config_sku
+      simple_skus {
+        sku
+        option_value
+        option_label
+      }
+    }
+  }
+}
+
+#2
+mutation {
+  multiProductsAddToCart(
+      region: "en-ae"
+      cart_items: [{
+        config_sku: "15207582-BLACK"
+        data: {
+          sku: "5714513484886"
+          qty: 1
+          option_id: "EU"
+          option_value: "36"
+        }
+        },
+        {
+          config_sku: "0080509340015393-GOLD"
+          data: {
+            sku: "5059049175366"
+            qty: 1
+            option_id: "EU"
+            option_value: "37"
+          }
+        }
+    ]
+  ){
+    response
+  }
+}
