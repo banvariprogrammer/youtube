@@ -1,0 +1,49 @@
+#WhatsApp Ecommerce Developed by Banvari Lal
+
+type Query {
+    recommended(mobile: String! @doc(description: "Customer mobile number")
+                region: String! @doc(description: "Customer region")
+                widget: String! @doc(description: "campaign widget")
+ ): recommendedProducts @resolver(class: "Banvari\\WhatsappEcommerce\\Model\\Resolver\\RecommendedProducts") @doc(description: "WhatsApp Ecommerce module datapassing")
+}
+
+type recommendedProducts {
+    locale: String
+    products: [ProductRecord] @doc(description: "Product records with info")
+}
+
+type ProductRecord {
+    config_sku: String @doc(description: "Get Configurable Product sku")
+    simple_skus: [SimpleProductInfo] @doc(description: "Simple Product with size info")
+}
+
+type SimpleProductInfo {
+    sku: String @doc(description: "Get simple Product sku")
+    option_value: String @doc(description: "Get Product size value")
+    option_label: String @doc(description: "Get Product size label")
+}
+
+# multi products add to cart mutation
+
+type Mutation {
+    multiProductsAddToCart(
+        region: String
+        cart_items: [CartItems] @doc(description: "WhatsApp Cart data")
+    ): CartProductsOutput @resolver(class: "\\Banvari\\WhatsappEcommerce\\Model\\Resolver\\CartProducts") @doc(description:"Multi products cart")
+}
+
+input CartItems {
+    config_sku: String
+    data: [SimpleSkuData] @doc(description: "WhatsApp Cart simple sku data")
+}
+
+input SimpleSkuData {
+    sku: String
+    qty: Int
+    option_id: String
+    option_value: String
+}
+
+type CartProductsOutput {
+   response: String @doc(description: "Return response")
+}

@@ -1,0 +1,12 @@
+# Copyright © Magento, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type Customer {
+    referral_coupon: String @doc(description: "Customer Referral Code")
+
+    invite_friends: String @doc(description: "Invite Friends Text")
+    @resolver( class: "Banvari\\Referral\\Model\\Resolver\\InviteFriendsText")
+    
+    refer_friend: String @doc(description: "Refer a Friend Text")
+    @resolver( class: "Banvari\\Referral\\Model\\Resolver\\ReferFriendText")
+}

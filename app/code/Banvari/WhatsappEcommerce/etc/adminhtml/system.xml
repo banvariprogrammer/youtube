@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="whatsapp_commerce" translate="label" sortOrder="210">
+            <label>WhatsApp Ecommerce</label>
+        </tab>
+        <section id="wa_commerce" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+            <label>Configuration</label>
+            <tab>whatsapp_commerce</tab>
+            <resource>Banvari_WhatsappEcommerce::config_whatsapp_commerce</resource>
+            <group id="general" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+                <label>WhatsApp Ecommerce Configuration</label>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="api_url" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>VUE API Endpoint</label>
+                </field>
+                <field id="api_key" type="password" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>VUE API Key</label>
+                </field>
+                <field id="like_widget" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>VUE You May Like Widget</label>
+                    <comment>enter the vue_visually_similar_slider widget id exp. 0</comment>
+                </field>
+                <field id="recently_widget" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>VUE Recently Viewed Widget</label>
+                    <comment>enter the vue_recently_viewed_slider widget id exp. 7</comment>
+                </field>
+                <field id="top_widget" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>VUE Top Picks Widget</label>
+                    <comment>enter the vue_top_picks_slider widget id exp. 11</comment>
+                </field>
+                <field id="style_widget" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>VUE Style It With Widget</label>
+                    <comment>enter the vue_style_it_slider widget id exp. 9</comment>
+                </field>
+                <field id="num_result" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Request to VUE for Maximum Recommended Products</label>
+                </field>
+                <field id="size_label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Product Size Attribute Label</label>
+                    <comment>enter the size attribute option label exp. EU, UK, US</comment>
+                </field>
+                <field id="size_id" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Product Size Attribute Id</label>
+                </field>
+                <field id="cart_api" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Create Guest Cart Magento API</label>
+                </field>
+                <field id="addtocart_api" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Add to Cart Magento API</label>
+                </field>
+                <field id="cart_api" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Show Cart Items PWA API</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
